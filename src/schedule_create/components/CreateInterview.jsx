@@ -3,6 +3,7 @@ import { Button, InputAdornment, Paper, TextField, Typography } from '@material-
 import { makeStyles } from '@material-ui/core/styles';
 // import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import React, { useState } from 'react';
+import instance from '../../util/axios';
 import DateTimePicker from './DateTimePicker';
 import SubmmitDialog from './SubmmitDialog';
 
@@ -21,9 +22,8 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
   },
   textField: {
-    width: 275,
     marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(2),
   },
   // upload: {
   //   marginLeft: 20,
@@ -50,6 +50,18 @@ export default function CreateInterview() {
     setValues({ ...values, [name]: event.target.value });
   };
 
+  const submmit = () => {
+    instance.post('createEvent/', {
+      ...values,
+      startTime: selectedDate,
+    }).then((res) => {
+      const { data } = res;
+      localStorage.setItem(data.info.id, JSON.stringify(data));
+    }).catch((err) => {
+      console.log(err);
+    });
+  };
+
   // function handleFileUpload() {
   //   const file = document.getElementById('icon-button-file').files[0];
   //   if (!file) {
@@ -69,6 +81,7 @@ export default function CreateInterview() {
       </Typography>
       <form className={classes.container} noValidate autoComplete="off">
         <TextField
+          fullWidth
           id="eventName"
           label="活动名称"
           className={classes.textField}
@@ -78,6 +91,7 @@ export default function CreateInterview() {
           variant="filled"
         />
         <TextField
+          fullWidth
           id="place"
           label="活动地点"
           className={classes.textField}
@@ -91,6 +105,7 @@ export default function CreateInterview() {
           handleDateChange={handleDateChange}
         />
         <TextField
+          fullWidth
           id="time-per-person"
           label="预计面试人均时间"
           className={classes.textField}
@@ -103,6 +118,7 @@ export default function CreateInterview() {
           }}
         />
         <TextField
+          fullWidth
           id="filled-multiline-static"
           label="人员名单（一行一个）"
           multiline
@@ -131,7 +147,7 @@ export default function CreateInterview() {
           <CloudUploadIcon className={classes.rightIcon} />
         </Button> */}
       </form>
-      <SubmmitDialog data={nameList} />
+      <SubmmitDialog data={nameList} submmit={submmit} />
     </Paper>
   );
 }

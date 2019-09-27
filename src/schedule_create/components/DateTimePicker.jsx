@@ -8,11 +8,12 @@ function InlineDateTimePicker({ selectedDate, handleDateChange }) {
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <KeyboardDateTimePicker
         style={{
-          marginLeft: 15,
+          marginLeft: 16,
+          marginRight: 16,
           marginTop: 20,
           marginBottom: 10,
-          width: 275,
         }}
+        fullWidth
         variant="inline"
         ampm={false}
         label="预计的面试开始时间"

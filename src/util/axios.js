@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://server.messi1.top/is/api/',
+  baseURL: 'http://is.messi1.top/api',
   withCredentials: true,
   timeout: 10000,
 });

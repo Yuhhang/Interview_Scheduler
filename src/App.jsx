@@ -5,6 +5,7 @@ import React from 'react';
 import {
   HashRouter, Link, Route, Switch,
 } from 'react-router-dom';
+import GlobalState from './schedule_manage/context/GlobalState';
 import Create from './schedule_create/Index';
 import Manage from './schedule_manage/Index';
 import View from './schedule_view/Index';
@@ -71,16 +72,18 @@ function App() {
 
   return (
     <MuiThemeProvider theme={theme}>
-      <HashRouter>
-        <Switch>
-          <Route path="/" exact component={IndexPage} />
-          <Route path="/view" component={View} />
-          <Route path="/create" component={Create} />
-          <Route path="/manage" component={Manage} />
-          {/* No Match */}
-          <Route component={IndexPage} />
-        </Switch>
-      </HashRouter>
+      <GlobalState>
+        <HashRouter>
+          <Switch>
+            <Route path="/" exact component={IndexPage} />
+            <Route path="/view/:id" component={View} />
+            <Route path="/create" component={Create} />
+            <Route path="/manage/:id/:key" component={Manage} />
+            {/* No Match */}
+            <Route component={IndexPage} />
+          </Switch>
+        </HashRouter>
+      </GlobalState>
     </MuiThemeProvider>
   );
 }

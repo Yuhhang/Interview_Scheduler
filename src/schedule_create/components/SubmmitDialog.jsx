@@ -15,7 +15,7 @@ import React from 'react';
 // eslint-disable-next-line react/jsx-props-no-spreading
 const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
-export default function SubmmitDialog({ data }) {
+export default function SubmmitDialog({ data, submmit }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -51,7 +51,7 @@ export default function SubmmitDialog({ data }) {
                 ? data.map((item, index) => (
                   // eslint-disable-next-line react/no-array-index-key
                   <ListItem key={index}>
-                    <ListItemText primary={item} />
+                    <ListItemText primary={`${index + 1}. ${item}`} />
                   </ListItem>
                 ))
                 : <ListItemText primary="无" />}
@@ -59,10 +59,10 @@ export default function SubmmitDialog({ data }) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color="secondary">
             取消
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={submmit} color="primary">
             生成活动
           </Button>
         </DialogActions>
