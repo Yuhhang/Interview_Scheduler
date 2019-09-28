@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 export const INIT_STATE = 'INIT_STATE';
 export const SET_INFO_EVENTNAME = 'SET_INFO_EVENTNAME';
 export const SET_INFO_PLACE = 'SET_INFO_PLACE';
@@ -55,7 +56,6 @@ const setStatusStart = (state) => {
 };
 
 const setStatusEnd = (state) => {
-  // eslint-disable-next-line prefer-destructuring
   const current = state.status.current;
   state.interviewedList.unshift(current);
 
@@ -72,7 +72,6 @@ const setStatusEnd = (state) => {
 };
 
 const setStatusNext = (state) => {
-  // eslint-disable-next-line prefer-destructuring
   const current = state.status.current;
   state.interviewedList.unshift(current);
   const nextPerson = state.waitingList.shift();
@@ -97,15 +96,16 @@ const setStatusPresent = (state) => ({
 });
 
 const setStatusunPresent = (state) => {
-  // eslint-disable-next-line prefer-destructuring
   const current = state.status.current;
   state.unPresent.unshift(current);
+  const nextPerson = state.waitingList.shift();
 
   return ({
     ...state,
     status: {
       ...state.status,
-      waiting: false,
+      waiting: true,
+      current: nextPerson,
     },
     // unPresent,
   });

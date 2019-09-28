@@ -57,6 +57,7 @@ export default function CreateInterview() {
     }).then((res) => {
       const { data } = res;
       localStorage.setItem(data.info.id, JSON.stringify(data));
+      window.location.replace(data.info.manage);
     }).catch((err) => {
       console.log(err);
     });

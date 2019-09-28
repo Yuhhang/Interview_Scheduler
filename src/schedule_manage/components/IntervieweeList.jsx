@@ -34,7 +34,7 @@ export default function IntervieweeList() {
   const { appState } = data;
 
   const classes = useStyles();
-  const [expandFinished, setExpandFinished] = React.useState(true);
+  const [expandunPresent, setExpandunPresent] = React.useState(true);
   const [edit, setEdit] = React.useState(false);
   const [checked, setChecked] = React.useState([0]);
 
@@ -135,7 +135,9 @@ export default function IntervieweeList() {
             已完成：
             {appState.interviewedList.length}
             /
-            {appState.waitingList.length + appState.interviewedList.length}
+            {appState.waitingList.length
+              + appState.interviewedList.length
+              + appState.unPresent.length}
           </ListSubheader>
         )}
         className={classes.root}
@@ -159,6 +161,39 @@ export default function IntervieweeList() {
               );
             })}
         </List>
+        <ListItem button onClick={() => setExpandunPresent(!expandunPresent)}>
+          <ListItemText primary="未到场" />
+          {expandunPresent ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={expandunPresent} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <UnPresentList />
+          </List>
+        </Collapse>
+      </List>
+    );
+  }
+
+  function UnPresentList() {
+    return (
+      <List component="div" disablePadding>
+        {appState.unPresent
+          && appState.unPresent.map((item) => {
+            const labelId = `interviewed-list-label-${item.index}`;
+            return (
+              <ListItem
+                className={classes.nested}
+                key={item.index}
+                role={undefined}
+                dense
+              >
+                <ListItemIcon>
+                  <FaceIcon />
+                </ListItemIcon>
+                <ListItemText id={labelId} primary={item.name} />
+              </ListItem>
+            );
+          })}
       </List>
     );
   }

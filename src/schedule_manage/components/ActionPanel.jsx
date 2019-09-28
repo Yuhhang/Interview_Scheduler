@@ -1,11 +1,11 @@
 // 开始、结束、下一位等操作
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import React, { useState, useContext } from 'react';
-import StartEndButton from './StartEndButton';
+import React, { useContext } from 'react';
 import context from '../context/context';
+import StartEndButton from './StartEndButton';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     alignItems: 'center',
@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
 export default function ActionPanel() {
   const data = useContext(context);
   const { appState } = data;
-  const { info } = appState;
   const { status } = appState;
 
   const classes = useStyles();
