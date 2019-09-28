@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
-import { Button, InputAdornment, Paper, TextField, Typography } from '@material-ui/core';
+import {
+  InputAdornment, Paper, TextField, Typography,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 // import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import React, { useState } from 'react';

@@ -40,7 +40,7 @@ function IndexPage() {
         >
           创建面试时间表
         </Button>
-        <Button
+        {/* <Button
           variant="outlined"
           color="default"
           component={Link}
@@ -55,7 +55,7 @@ function IndexPage() {
           to="/manage"
         >
           管理
-        </Button>
+        </Button> */}
       </Typography>
     </Paper>
   );
