@@ -6,6 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
+import Grid from '@material-ui/core/Grid';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import { makeStyles } from '@material-ui/core/styles';
 import DragHandleIcon from '@material-ui/icons/DragHandle';
@@ -19,7 +20,7 @@ import context from '../context/context';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    maxWidth: 360,
+    // maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
     color: theme.palette.text.primary,
   },
@@ -54,12 +55,8 @@ export default function IntervieweeList() {
     if (edit) {
       return (
         <span>
-          <Button onClick={() => setEdit(!edit)}>
-            取消
-          </Button>
-          <Button color="secondary">
-            删除
-          </Button>
+          <Button onClick={() => setEdit(!edit)}>取消</Button>
+          <Button color="secondary">删除</Button>
         </span>
       );
     }
@@ -70,84 +67,110 @@ export default function IntervieweeList() {
     );
   }
 
-  return (
-    <List
-      component="nav"
-      subheader={(
-        <ListSubheader id="nested-list-subheader">
-          <div>
-            名单
-            <span style={{ float: 'right' }}>
-              <EditButton />
-            </span>
-          </div>
-        </ListSubheader>
-      )}
-      className={classes.root}
-    >
-      {appState.waitingList && appState.waitingList.map((item) => {
-        const labelId = `checkbox-list-label-${item.index}`;
+  function WaitingList() {
+    return (
+      <List
+        component="nav"
+        subheader={(
+          <ListSubheader id="nested-list-subheader">
+            <div>
+              等候名单
+              <span style={{ float: 'right' }}>
+                <EditButton />
+              </span>
+            </div>
+          </ListSubheader>
+        )}
+        className={classes.root}
+      >
+        {appState.waitingList
+          && appState.waitingList.map((item) => {
+            const labelId = `checkbox-list-label-${item.index}`;
 
-        return (
-          <ListItem
-            key={item.index}
-            role={undefined}
-            dense
-            button
-            onClick={handleToggle(item.index)}
-          >
-            <ListItemIcon>
-              {
-                edit
-                  ? (
+            return (
+              <ListItem
+                key={item.index}
+                role={undefined}
+                dense
+                button
+                onClick={handleToggle(item.index)}
+              >
+                <ListItemIcon>
+                  {edit ? (
                     <Checkbox
                       edge="start"
                       checked={checked.indexOf(item.index) !== -1}
                       tabIndex={-1}
                       disableRipple
                     />
-                  )
-                  : <FaceIcon />
-              }
-            </ListItemIcon>
-            <ListItemText id={labelId} primary={item.name} />
-            {edit
-            && (
-            <ListItemSecondaryAction>
-              <IconButton disableRipple edge="end" aria-label="comments">
-                <DragHandleIcon />
-              </IconButton>
-            </ListItemSecondaryAction>
-            )}
-          </ListItem>
-        );
-      })}
-
-      <ListItem onClick={() => setExpandFinished(!expandFinished)}>
-        <ListItemText primary="已完成" />
-        {expandFinished ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={expandFinished} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          {appState.interviewedList && appState.interviewedList.map((item) => {
-            const labelId = `interviewed-list-label-${item.index}`;
-            return (
-              <ListItem
-                className={classes.nested}
-                key={item.index}
-                role={undefined}
-                dense
-              >
-                <ListItemIcon>
-                  <FaceIcon />
+                  ) : (
+                    <FaceIcon />
+                  )}
                 </ListItemIcon>
                 <ListItemText id={labelId} primary={item.name} />
+                {edit && (
+                  <ListItemSecondaryAction>
+                    <IconButton
+                      disableRipple
+                      edge="end"
+                      aria-label="comments"
+                    >
+                      <DragHandleIcon />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                )}
               </ListItem>
             );
           })}
+      </List>
+    );
+  }
 
+  function InterviewedList() {
+    return (
+      <List
+        component="nav"
+        subheader={(
+          <ListSubheader id="nested-list-subheader">
+            已完成：
+            {appState.interviewedList.length}
+            /
+            {appState.waitingList.length + appState.interviewedList.length}
+          </ListSubheader>
+        )}
+        className={classes.root}
+      >
+        <List component="div" disablePadding>
+          {appState.interviewedList
+            && appState.interviewedList.map((item) => {
+              const labelId = `interviewed-list-label-${item.index}`;
+              return (
+                <ListItem
+                  className={classes.nested}
+                  key={item.index}
+                  role={undefined}
+                  dense
+                >
+                  <ListItemIcon>
+                    <FaceIcon />
+                  </ListItemIcon>
+                  <ListItemText id={labelId} primary={item.name} />
+                </ListItem>
+              );
+            })}
         </List>
-      </Collapse>
-    </List>
+      </List>
+    );
+  }
+
+  return (
+    <Grid container spacing={3}>
+      <Grid item xs={12} sm={6}>
+        <WaitingList />
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <InterviewedList />
+      </Grid>
+    </Grid>
   );
 }

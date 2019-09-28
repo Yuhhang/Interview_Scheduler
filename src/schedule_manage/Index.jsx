@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,10 +10,9 @@ import EventInfo from './components/EventInfo';
 import instance from '../util/axios';
 import context from './context/context';
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: '#4db6ac',
+    backgroundColor: '#19a1af',
     minHeight: '100vh',
     padding: 10,
     flexGrow: 1,
@@ -37,6 +37,9 @@ async function fetchData(id, key) {
 
 export default function Manage(props) {
   const data = useContext(context);
+  const { appState } = data;
+  const { info } = appState;
+  const { status } = appState;
 
   const { match } = props;
   const { params } = match;
@@ -52,6 +55,30 @@ export default function Manage(props) {
   // if (!data) data = fetchData(id, key);
 
   const classes = useStyles();
+  const date = new Date(info.startTime);
+
+  function StatusPanel() {
+    return (
+      <Grid container spacing={3}>
+        <Grid item xs={6}>
+          <Paper
+            className={classes.paper}
+            style={{
+              backgroundColor: status.waiting ? '#fff59d' : status.start ? '#aed581' : '#bdbdbd',
+            }}
+          >
+            {status.waiting ? '等待中' : status.start ? '进行中' : `计划开始时间：${date.toLocaleTimeString()}`}
+          </Paper>
+        </Grid>
+        <Grid item xs={6}>
+          <Paper className={classes.paper}>
+            正在面试:
+            {status.current.name || '无'}
+          </Paper>
+        </Grid>
+      </Grid>
+    );
+  }
 
   return (
     <div className={classes.root}>
@@ -62,19 +89,15 @@ export default function Manage(props) {
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
+          <StatusPanel />
+          <Paper className={classes.paper} style={{ marginTop: 20 }}>
             <ActionPanel />
           </Paper>
         </Grid>
+
         <Grid item xs={12} sm={6}>
           {/* <Paper className={classes.paper}>xs=12 sm=6</Paper> */}
           <IntervieweeList />
-        </Grid>
-        <Grid item xs={6} sm={3}>
-          <Paper className={classes.paper}>xs=6 sm=3</Paper>
-        </Grid>
-        <Grid item xs={6} sm={3}>
-          <Paper className={classes.paper}>xs=6 sm=3</Paper>
         </Grid>
         <Grid item xs={6} sm={3}>
           <Paper className={classes.paper}>xs=6 sm=3</Paper>

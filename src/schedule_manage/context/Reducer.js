@@ -63,6 +63,7 @@ const setStatusEnd = (state) => {
     ...state,
     status: {
       ...state.status,
+      waiting: false,
       start: false,
       end: true,
     },

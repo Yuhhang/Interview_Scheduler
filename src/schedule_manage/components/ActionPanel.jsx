@@ -1,5 +1,5 @@
 // 开始、结束、下一位等操作
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useState, useContext } from 'react';
 import StartEndButton from './StartEndButton';
@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ActionPanel() {
   const data = useContext(context);
   const { appState } = data;
+  const { info } = appState;
   const { status } = appState;
 
   const classes = useStyles();
@@ -59,11 +60,13 @@ export default function ActionPanel() {
   }
 
   return (
-    <div className={classes.root}>
-      <StartEndButton />
-      <span className={classes.nextButton}>
-        <NextButton />
-      </span>
-    </div>
+    <>
+      <div className={classes.root}>
+        <StartEndButton />
+        <span className={classes.nextButton}>
+          <NextButton />
+        </span>
+      </div>
+    </>
   );
 }
