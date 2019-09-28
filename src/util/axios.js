@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://is.messi1.top/api',
+  baseURL: 'https://interview.microsoftstudent.club/api',
   withCredentials: true,
   timeout: 10000,
 });
