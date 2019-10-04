@@ -1,13 +1,15 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
-import React, { useContext, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+import { Snackbar, SnackbarContent } from '@material-ui/core';
+import { green } from '@material-ui/core/colors';
 import Grid from '@material-ui/core/Grid';
-import IntervieweeList from './components/IntervieweeList';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
+import React, { useContext, useEffect, useState } from 'react';
+import instance from '../util/axios';
 import ActionPanel from './components/ActionPanel';
 import EventInfo from './components/EventInfo';
-import instance from '../util/axios';
+import IntervieweeList from './components/IntervieweeList';
 import context from './context/context';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,6 +24,12 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
+  success: {
+    backgroundColor: green[600],
+  },
+  error: {
+    backgroundColor: theme.palette.error.dark,
+  },
 }));
 
 export default function Manage(props) {
@@ -35,6 +43,10 @@ export default function Manage(props) {
   const { match } = props;
   const { params } = match;
   const { id, key } = params;
+
+  const [openMsgBar, setOpenMsgBar] = useState(false);
+  const [updateErr, setUpdateErr] = useState(false);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     instance.post('/getEvent', {
@@ -53,6 +65,18 @@ export default function Manage(props) {
       id,
       key,
       newState: appState,
+    }).then(() => {
+      setOpenMsgBar(true);
+      if (updateErr) {
+        setUpdateErr(false);
+      }
+      setMessage('更新成功');
+    }).catch(() => {
+      setOpenMsgBar(true);
+      if (!updateErr) {
+        setUpdateErr(true);
+      }
+      setMessage('更新失败，请刷新重试');
     });
   }, [appState]);
 
@@ -86,6 +110,20 @@ export default function Manage(props) {
 
   return (
     <div className={classes.root}>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        open={openMsgBar}
+        autoHideDuration={4000}
+        onClose={() => setOpenMsgBar(false)}
+      >
+        <SnackbarContent
+          className={updateErr ? classes.error : classes.success}
+          message={message}
+        />
+      </Snackbar>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
