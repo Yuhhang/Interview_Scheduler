@@ -98,7 +98,7 @@ export default function CircularIntegration() {
         onTouchEnd={handleLongPressEnd}
       >
         <Typography className={classes.buttonText}>
-          {status.start ? '终止' : (status.end ? '已结束' : '开始')}
+          {status.start ? '长按终止' : (status.end ? '已结束' : '长按开始')}
         </Typography>
       </Fab>
       <CircularProgress size={98} className={classes.fabProgress} variant="static" value={loadingPercent} />

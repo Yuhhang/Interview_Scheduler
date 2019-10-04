@@ -1,9 +1,10 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
+import io from 'socket.io-client';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import context from '../schedule_manage/context/context';
 import instance from '../util/axios';
 import EventInfo from './components/EventInfo';
@@ -23,6 +24,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function transformTime(timestamp) {
+  if (timestamp) {
+    const time = new Date(timestamp);
+    // const y = time.getFullYear();
+    // const M = time.getMonth() + 1;
+    // const d = time.getDate();
+    const h = time.getHours();
+    const m = time.getMinutes();
+    const s = time.getSeconds();
+    return `${h}:${m}:${s}`;
+  }
+  return '';
+}
+
 export default function View(props) {
   const data = useContext(context);
   const { appState } = data;
@@ -35,16 +50,51 @@ export default function View(props) {
   const { params } = match;
   const { id } = params;
 
+  const classes = useStyles();
+  const date = new Date(info.startTime);
+
+  const [connected, setConnected] = useState(false);
+  const [lastUpdateTime, setLastUpdateTime] = useState(Date.now());
+
   useEffect(() => {
     instance.post('/getEvent', { id }).then((res) => {
       data.initState(res.data);
     });
+    const socket = io.connect(`https://interview.microsoftstudent.club/?id=${id}`);
+    socket.on('connect', () => {
+      setConnected(true);
+    });
+    socket.on('connect_error', () => {
+      setConnected(false);
+    });
+    socket.on('update', (data1) => {
+      data.initState(data1);
+      setLastUpdateTime(Date.now());
+    });
+    // console.log(socket);
+
+    return () => {
+      socket.close();
+    };
   }, []);
 
   // if (!data) data = fetchData(id, key);
 
-  const classes = useStyles();
-  const date = new Date(info.startTime);
+  function RenewStatus() {
+    return (
+      <Grid item xs={12}>
+        <Paper
+          className={classes.paper}
+          style={{
+            color: connected ? '' : 'red',
+          }}
+        >
+          {connected ? '上次刷新时间: ' : '与推送服务器断连，请手动刷新'}
+          {connected ? transformTime(lastUpdateTime) : ''}
+        </Paper>
+      </Grid>
+    );
+  }
 
   function StatusPanel() {
     return (
@@ -65,6 +115,7 @@ export default function View(props) {
             {status.current.name || '无'}
           </Paper>
         </Grid>
+        <RenewStatus />
       </Grid>
     );
   }

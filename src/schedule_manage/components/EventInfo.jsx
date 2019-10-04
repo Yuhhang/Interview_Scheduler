@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { Typography, Button } from '@material-ui/core';
 import React, { useContext } from 'react';
 import context from '../context/context';
@@ -17,7 +18,7 @@ export default function EventInfo() {
         地点:
         {info.place}
       </Typography>
-      <Typography variant="body2" color="textSecondary" align="left">
+      <Typography variant="body2" color="textSecondary" align="left" style={{ wordBreak: 'break-all' }}>
         查看链接:
         {info.view}
         <Button onClick={() => navigator.clipboard.writeText(info.view)}>

@@ -56,7 +56,7 @@ export default function IntervieweeList() {
       return (
         <span>
           <Button onClick={() => setEdit(!edit)}>取消</Button>
-          <Button color="secondary">删除</Button>
+          <Button disabled color="secondary">删除</Button>
         </span>
       );
     }

@@ -48,7 +48,7 @@ export default function ActionPanel() {
     }
     return (
       <Button
-        disabled={!status.start}
+        disabled={!status.start || !(appState.waitingList.length > 0)}
         color="primary"
         variant="contained"
         onClick={() => data.setStatusNext()}
