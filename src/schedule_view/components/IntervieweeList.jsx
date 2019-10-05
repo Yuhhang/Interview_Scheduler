@@ -83,6 +83,9 @@ export default function IntervieweeList() {
                   <FaceIcon />
                 </ListItemIcon>
                 <ListItemText
+                  style={{
+                    color: index === 0 ? '#000000' : index === 1 ? '#000000' : '',
+                  }}
                   id={labelId}
                   primary={item.name}
                   secondary={

@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     padding: 10,
     flexGrow: 1,
   },
+  gridRoot: {
+    width: '100vw',
+  },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
@@ -28,9 +31,9 @@ function transformTime(timestamp) {
     // const y = time.getFullYear();
     // const M = time.getMonth() + 1;
     // const d = time.getDate();
-    const h = time.getHours();
-    const m = time.getMinutes();
-    const s = time.getSeconds();
+    const h = time.getHours().toString().padStart(2, '0');
+    const m = time.getMinutes().toString().padStart(2, '0');
+    const s = time.getSeconds().toString().padStart(2, '0');
     return `${h}:${m}:${s}`;
   }
   return '';
@@ -102,6 +105,7 @@ export default function View(props) {
             className={classes.paper}
             style={{
               backgroundColor: status.waiting ? '#fff59d' : status.start ? '#aed581' : '#bdbdbd',
+              color: '#000000',
             }}
           >
             {status.waiting ? '等待中' : status.start ? '进行中' : `计划开始时间：${date.getMonth() + 1}月${date.getDate()}日 ${date.toLocaleTimeString()}`}
@@ -120,7 +124,7 @@ export default function View(props) {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} className={classes.gridRoot}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
             <EventInfo />
