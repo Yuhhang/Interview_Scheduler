@@ -58,7 +58,7 @@ export default function Manage(props) {
   }, []);
 
   useEffect(() => {
-    if (appState.init) {
+    if (appState.info.key === '') {
       return;
     }
     instance.post('/updateState', {
@@ -95,7 +95,7 @@ export default function Manage(props) {
               backgroundColor: status.waiting ? '#fff59d' : status.start ? '#aed581' : '#bdbdbd',
             }}
           >
-            {status.waiting ? '等待中' : status.start ? '进行中' : `计划开始时间：${date.toLocaleTimeString()}`}
+            {status.waiting ? '等待中' : status.start ? '进行中' : `计划开始时间：${date.getMonth() + 1}月${date.getDate()}日 ${date.toLocaleTimeString()}`}
           </Paper>
         </Grid>
         <Grid item xs={6}>

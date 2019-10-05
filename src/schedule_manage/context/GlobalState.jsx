@@ -18,7 +18,6 @@ import {
 
 const GlobalState = (props) => {
   const initialState = {
-    init: true,
     info: {
       id: '',
       key: '',

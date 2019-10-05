@@ -61,7 +61,7 @@ export default function IntervieweeList() {
       );
     }
     return (
-      <Button color="primary" onClick={() => setEdit(!edit)}>
+      <Button disabled color="primary" onClick={() => setEdit(!edit)}>
         编辑
       </Button>
     );

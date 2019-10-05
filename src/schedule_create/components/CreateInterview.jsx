@@ -3,7 +3,6 @@ import {
   InputAdornment, Paper, TextField, Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-// import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import React, { useState } from 'react';
 import instance from '../../util/axios';
 import DateTimePicker from './DateTimePicker';
@@ -11,7 +10,6 @@ import SubmmitDialog from './SubmmitDialog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // backgroundColor: 'lightBlue',
     borderRadius: 0,
     maxWidth: 500,
     minHeight: '100vh',
@@ -27,13 +25,6 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
   },
-  // upload: {
-  //   marginLeft: 20,
-  //   marginTop: 20,
-  // },
-  // rightIcon: {
-  //   marginLeft: theme.spacing(1),
-  // },
 }));
 
 export default function CreateInterview() {
@@ -55,7 +46,7 @@ export default function CreateInterview() {
   const submmit = () => {
     instance.post('createEvent/', {
       ...values,
-      startTime: selectedDate,
+      startTime: Date.parse(selectedDate),
     }).then((res) => {
       const { data } = res;
       localStorage.setItem(data.info.id, JSON.stringify(data));
@@ -64,18 +55,6 @@ export default function CreateInterview() {
       console.log(err);
     });
   };
-
-  // function handleFileUpload() {
-  //   const file = document.getElementById('icon-button-file').files[0];
-  //   if (!file) {
-  //     return;
-  //   }
-  //   const reader = new FileReader();
-  //   reader.onload = (evt) => {
-  //     console.log(evt.target.result);
-  //   };
-  //   reader.readAsText(file, 'gb2312');
-  // }
 
   return (
     <Paper className={classes.root}>
@@ -132,23 +111,6 @@ export default function CreateInterview() {
           margin="normal"
           variant="filled"
         />
-
-        {/* <input
-          style={{ display: 'none' }}
-          accept=".csv,.txt"
-          id="icon-button-file"
-          type="file"
-          onChange={() => handleFileUpload()}
-        />
-        <Button
-          variant="contained"
-          color="default"
-          className={classes.upload}
-          onClick={() => document.getElementById('icon-button-file').click()}
-        >
-          上传人员名单
-          <CloudUploadIcon className={classes.rightIcon} />
-        </Button> */}
       </form>
       <SubmmitDialog data={nameList} submmit={submmit} />
     </Paper>

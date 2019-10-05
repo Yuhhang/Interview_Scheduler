@@ -1,12 +1,10 @@
-import { Button, Paper, Typography } from '@material-ui/core';
+import { Paper, Typography } from '@material-ui/core';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import React from 'react';
-import {
-  HashRouter, Link, Route, Switch,
-} from 'react-router-dom';
-import GlobalState from './schedule_manage/context/GlobalState';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import Create from './schedule_create/Index';
+import GlobalState from './schedule_manage/context/GlobalState';
 import Manage from './schedule_manage/Index';
 import View from './schedule_view/Index';
 
@@ -26,7 +24,7 @@ function IndexPage() {
         variant="h5"
         component="h3"
         align="center"
-        style={{ marginTop: 20 }}
+        style={{ paddingTop: 20 }}
       >
         MSC面试时间表
       </Typography>

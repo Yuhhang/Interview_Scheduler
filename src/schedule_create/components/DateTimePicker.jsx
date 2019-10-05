@@ -2,7 +2,6 @@ import React from 'react';
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 
-// eslint-disable-next-line react/prop-types
 function InlineDateTimePicker({ selectedDate, handleDateChange }) {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>

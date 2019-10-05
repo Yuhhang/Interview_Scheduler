@@ -46,6 +46,10 @@ const setStatusStart = (state) => {
   const nextPerson = state.waitingList.shift();
   return ({
     ...state,
+    info: {
+      ...state.info,
+      startTime: Date.now(),
+    },
     status: {
       ...state.status,
       start: true,

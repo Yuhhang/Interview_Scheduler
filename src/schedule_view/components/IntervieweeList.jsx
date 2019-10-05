@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import Collapse from '@material-ui/core/Collapse';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
@@ -28,9 +27,31 @@ const useStyles = makeStyles((theme) => ({
 export default function IntervieweeList() {
   const data = useContext(context);
   const { appState } = data;
+  const { info } = appState;
+  const { timePerPerson } = info;
+  const { status } = appState;
 
   const classes = useStyles();
   const [expandunPresent, setExpandunPresent] = React.useState(true);
+
+  function ApproximatelyTimeLater({ index }) {
+    const { startTime } = info;
+    const currentTimeStamp = Date.now();
+
+    const interviewedNum = appState.interviewedList.length || 1;
+    const min = (currentTimeStamp - startTime) / 60000; // 已经过去的分钟数
+    let minPerPerson = parseInt(min / interviewedNum, 10);
+    if (minPerPerson < timePerPerson) {
+      minPerPerson = timePerPerson;
+    }
+
+    return (
+      <span>
+        {index * minPerPerson}
+        {' min'}
+      </span>
+    );
+  }
 
   function WaitingList() {
     return (
@@ -61,7 +82,13 @@ export default function IntervieweeList() {
                 <ListItemIcon>
                   <FaceIcon />
                 </ListItemIcon>
-                <ListItemText id={labelId} primary={item.name} />
+                <ListItemText
+                  id={labelId}
+                  primary={item.name}
+                  secondary={
+                    status.start && index !== 0 && <ApproximatelyTimeLater index={index} />
+                  }
+                />
               </ListItem>
             );
           })}
