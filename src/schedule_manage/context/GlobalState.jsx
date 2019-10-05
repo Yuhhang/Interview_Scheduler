@@ -18,15 +18,16 @@ import {
 
 const GlobalState = (props) => {
   const initialState = {
+    init: true,
     info: {
       id: '',
       key: '',
-      view: '',
-      manage: '',
-      eventName: '',
-      place: '',
+      view: '加载中...',
+      manage: '加载中...',
+      eventName: '加载中...',
+      place: '加载中...',
       timePerPerson: 10,
-      startTime: '',
+      startTime: '0',
     },
     status: {
       start: false,

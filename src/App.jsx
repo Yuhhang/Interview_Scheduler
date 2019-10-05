@@ -15,7 +15,8 @@ function IndexPage() {
   return (
     <Paper
       style={{
-        maxWidth: 500,
+        // maxWidth: 500,
+        backgroundColor: '#2590b0',
         height: '100vh',
         margin: 'auto',
         borderRadius: 0,
@@ -25,6 +26,7 @@ function IndexPage() {
         variant="h5"
         component="h3"
         align="center"
+        style={{ marginTop: 20 }}
       >
         MSC面试时间表
       </Typography>
@@ -32,14 +34,15 @@ function IndexPage() {
         align="center"
         style={{ marginTop: 300 }}
       >
-        <Button
+        {/* <Button
           variant="outlined"
           color="default"
           component={Link}
           to="/create"
         >
           创建面试时间表
-        </Button>
+        </Button> */}
+        请向管理人员获取面试表链接
         {/* <Button
           variant="outlined"
           color="default"

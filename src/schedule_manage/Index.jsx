@@ -58,7 +58,7 @@ export default function Manage(props) {
   }, []);
 
   useEffect(() => {
-    if (appState.info.startTime === '') {
+    if (appState.init) {
       return;
     }
     instance.post('/updateState', {
@@ -108,15 +108,15 @@ export default function Manage(props) {
     );
   }
 
-  return (
-    <div className={classes.root}>
+  function MsgBar() {
+    return (
       <Snackbar
         anchorOrigin={{
           vertical: 'top',
-          horizontal: 'center',
+          horizontal: 'right',
         }}
         open={openMsgBar}
-        autoHideDuration={4000}
+        autoHideDuration={3000}
         onClose={() => setOpenMsgBar(false)}
       >
         <SnackbarContent
@@ -124,6 +124,12 @@ export default function Manage(props) {
           message={message}
         />
       </Snackbar>
+    );
+  }
+
+  return (
+    <div className={classes.root}>
+      <MsgBar />
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>

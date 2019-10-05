@@ -1,8 +1,15 @@
 {
   "short_name": "面试安排表",
   "name": "MSC面试安排表",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#2590b0",
   "background_color": "#ffffff"
 }
