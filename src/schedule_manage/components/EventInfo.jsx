@@ -11,19 +11,16 @@ export default function EventInfo() {
 
   const [copySuccess, setCopySuccess] = useState(undefined);
 
-  function copyToClipboard(text) {
-    navigator.clipboard.writeText(text)
-      .then(() => {
-        setCopySuccess(true);
-      })
-      .catch(() => {
-        setCopySuccess(false);
-      })
-      .finally(() => {
-        setTimeout(() => {
-          setCopySuccess(undefined);
-        }, 1000);
-      });
+  async function copyToClipboard(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopySuccess(true);
+    } catch (err) {
+      setCopySuccess(false);
+    }
+    setTimeout(() => {
+      setCopySuccess(undefined);
+    }, 1000);
   }
 
   return (
