@@ -29,12 +29,10 @@ export default function EventInfo() {
         {info.eventName}
       </Typography>
       <Typography variant="h6" color="textPrimary" align="left">
-        地点:
-        {info.place}
+        {`地点：${info.place}`}
       </Typography>
       <Typography variant="body2" color="textSecondary" align="left">
-        查看链接:
-        {info.view}
+        {`查看链接：${info.view}`}
         <Button
           size="small"
           style={{ marginLeft: 10 }}
@@ -45,8 +43,7 @@ export default function EventInfo() {
         </Button>
       </Typography>
       <Typography variant="body2" color="textSecondary" align="left">
-        管理链接:
-        {info.manage}
+        {`管理链接：${info.manage}`}
         <Button
           size="small"
           style={{ marginLeft: 10 }}
