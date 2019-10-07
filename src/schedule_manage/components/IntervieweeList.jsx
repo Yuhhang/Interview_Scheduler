@@ -15,6 +15,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import FaceIcon from '@material-ui/icons/Face';
 import React, { useContext } from 'react';
 import { Button } from '@material-ui/core';
+import AddPersonDialog from './AddPersonDialog';
 import context from '../context/context';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,7 +37,8 @@ export default function IntervieweeList() {
   const classes = useStyles();
   const [expandunPresent, setExpandunPresent] = React.useState(true);
   const [edit, setEdit] = React.useState(false);
-  const [checked, setChecked] = React.useState([0]);
+  const [openAdd, setOpenAdd] = React.useState(false);
+  const [checked, setChecked] = React.useState([]);
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -51,19 +53,38 @@ export default function IntervieweeList() {
     setChecked(newChecked);
   };
 
+  const deleteChecked = () => {
+    const newList = appState.waitingList.filter((item) => !checked.includes(item.index));
+    data.updateState({
+      ...appState,
+      waitingList: newList,
+    });
+    setChecked([]);
+    setEdit(false);
+  };
+
   function EditButton() {
     if (edit) {
       return (
         <span>
-          <Button onClick={() => setEdit(!edit)}>取消</Button>
-          <Button disabled color="secondary">删除</Button>
+          <Button onClick={() => setEdit(!edit)}>
+            取消
+          </Button>
+          <Button color="secondary" onClick={deleteChecked}>
+            删除
+          </Button>
         </span>
       );
     }
     return (
-      <Button disabled color="primary" onClick={() => setEdit(!edit)}>
-        编辑
-      </Button>
+      <>
+        <Button color="primary" onClick={() => setOpenAdd(true)}>
+          添加
+        </Button>
+        <Button color="primary" onClick={() => setEdit(!edit)}>
+          编辑
+        </Button>
+      </>
     );
   }
 
@@ -90,8 +111,6 @@ export default function IntervieweeList() {
             return (
               <ListItem
                 key={item.index}
-                role={undefined}
-                dense
                 button
                 onClick={handleToggle(item.index)}
               >
@@ -199,13 +218,16 @@ export default function IntervieweeList() {
   }
 
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12} sm={6}>
-        <WaitingList />
+    <>
+      <AddPersonDialog open={openAdd} setOpen={setOpenAdd} />
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={6}>
+          <WaitingList />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <InterviewedList />
+        </Grid>
       </Grid>
-      <Grid item xs={12} sm={6}>
-        <InterviewedList />
-      </Grid>
-    </Grid>
+    </>
   );
 }

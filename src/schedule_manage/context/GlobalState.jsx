@@ -41,7 +41,7 @@ const GlobalState = (props) => {
 
   const [appState, dispatch] = useReducer(userReducer, initialState);
 
-  const initState = (newState) => {
+  const updateState = (newState) => {
     dispatch({ type: INIT_STATE, newState });
   };
 
@@ -86,7 +86,7 @@ const GlobalState = (props) => {
     <context.Provider
       value={{
         appState,
-        initState,
+        updateState,
         setInfoEventname,
         setInfoPlace,
         setInfoTimePerPerson,

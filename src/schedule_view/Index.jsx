@@ -59,7 +59,7 @@ export default function View(props) {
 
   useEffect(() => {
     instance.post('/getEvent', { id }).then((res) => {
-      data.initState(res.data);
+      data.updateState(res.data);
     });
     const socket = io.connect(`https://interview.microsoftstudent.club/?id=${id}`);
     socket.on('connect', () => {
@@ -69,7 +69,7 @@ export default function View(props) {
       setConnected(false);
     });
     socket.on('update', (data1) => {
-      data.initState(data1);
+      data.updateState(data1);
       setLastUpdateTime(Date.now());
     });
     // console.log(socket);

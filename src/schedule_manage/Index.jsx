@@ -56,7 +56,7 @@ export default function Manage(props) {
       id,
       key,
     }).then((res) => {
-      data.initState(res.data);
+      data.updateState(res.data);
     });
   }, []);
 

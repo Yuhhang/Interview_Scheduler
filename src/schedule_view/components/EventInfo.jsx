@@ -14,8 +14,7 @@ export default function EventInfo() {
         {info.eventName}
       </Typography>
       <Typography variant="h6" color="textPrimary" align="left">
-        地点:
-        {info.place}
+        {`地点：${info.place}`}
       </Typography>
     </div>
   );
