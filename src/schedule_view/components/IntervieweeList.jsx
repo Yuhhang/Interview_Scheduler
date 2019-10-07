@@ -47,8 +47,7 @@ export default function IntervieweeList() {
 
     return (
       <span>
-        {index * minPerPerson}
-        {' min'}
+        {`+${index * minPerPerson} min`}
       </span>
     );
   }

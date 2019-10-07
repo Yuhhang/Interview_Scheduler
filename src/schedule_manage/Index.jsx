@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
     padding: 10,
     flexGrow: 1,
   },
+  gridRoot: {
+    width: '100vw',
+  },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
@@ -130,7 +133,7 @@ export default function Manage(props) {
   return (
     <div className={classes.root}>
       <MsgBar />
-      <Grid container spacing={3}>
+      <Grid container spacing={3} className={classes.gridRoot}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
             <EventInfo />

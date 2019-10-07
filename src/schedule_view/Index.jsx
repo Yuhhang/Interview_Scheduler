@@ -86,11 +86,8 @@ export default function View(props) {
       <Grid item xs={12}>
         <Paper
           className={classes.paper}
-          style={{
-            color: connected ? '' : 'red',
-          }}
         >
-          {connected ? '上次刷新时间: ' : '与推送服务器断连，请手动刷新'}
+          {connected ? '上次刷新时间: ' : '正在与推送服务器建立连接...'}
           {connected ? transformTime(lastUpdateTime) : ''}
         </Paper>
       </Grid>
@@ -100,6 +97,7 @@ export default function View(props) {
   function StatusPanel() {
     return (
       <Grid container spacing={3}>
+        <RenewStatus />
         <Grid item xs={6}>
           <Paper
             className={classes.paper}
@@ -117,7 +115,6 @@ export default function View(props) {
             {status.current.name || '无'}
           </Paper>
         </Grid>
-        <RenewStatus />
       </Grid>
     );
   }
