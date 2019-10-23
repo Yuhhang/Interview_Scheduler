@@ -74,21 +74,15 @@ export default function IntervieweeList() {
                 key={item.index}
                 role={undefined}
                 dense
-                style={{
-                  backgroundColor: index === 0 ? '#f9f166' : index === 1 ? '#a1f9a9' : '',
-                }}
               >
                 <ListItemIcon>
                   <FaceIcon />
                 </ListItemIcon>
                 <ListItemText
-                  style={{
-                    color: index === 0 ? '#000000' : index === 1 ? '#000000' : '',
-                  }}
                   id={labelId}
                   primary={item.name}
                   secondary={
-                    status.start && index !== 0 && <ApproximatelyTimeLater index={index} />
+                    status.start && (index !== 0 ? <ApproximatelyTimeLater index={index} /> : '下一位')
                   }
                 />
               </ListItem>

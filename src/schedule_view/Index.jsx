@@ -111,8 +111,9 @@ export default function View(props) {
         </Grid>
         <Grid item xs={6}>
           <Paper className={classes.paper}>
-            {status.waiting ? '正在等待：' : '正在面试：'}
+            {status.waiting ? '请 ' : '正在面试：'}
             {status.current.name || '无'}
+            {status.waiting && ' 同学前往面试'}
           </Paper>
         </Grid>
       </Grid>
