@@ -73,34 +73,38 @@ export default function CircularIntegration() {
 
   useEffect(() => {
     if (loadingPercent > 100) {
-      if (status.start) {
-        data.setStatusEnd();
-      } else {
-        data.setStatusStart();
-      }
+      // if (status.start) {
+      //   data.setStatusEnd();
+      // } else {
+      //   data.setStatusStart();
+      // }
+      data.setStatusStart();
       setLoading(false);
       setLoadingPercent(0);
       clearInterval(timer.current);
     }
-    // console.log(loadingPercent);
-  });
+  }, [loadingPercent]);
 
-  return (
-    <div className={classes.wrapper}>
-      <Fab
-        style={{ zIndex: 10, width: 80, height: 80 }}
-        className={buttonClassname}
-        disabled={!status.start && status.end}
-        onMouseDown={handleLongPressStart}
-        onMouseUp={handleLongPressEnd}
-        onTouchStart={handleLongPressStart}
-        onTouchEnd={handleLongPressEnd}
-      >
-        <Typography className={classes.buttonText}>
-          {status.start ? '长按终止' : (status.end ? '已结束' : '长按开始')}
-        </Typography>
-      </Fab>
-      <CircularProgress size={98} className={classes.fabProgress} variant="static" value={loadingPercent} />
-    </div>
-  );
+  if (!status.start) {
+    return (
+      <div className={classes.wrapper}>
+        <Fab
+          style={{ zIndex: 10, width: 80, height: 80 }}
+          className={buttonClassname}
+          // disabled={!status.start && status.end}
+          onMouseDown={handleLongPressStart}
+          onMouseUp={handleLongPressEnd}
+          onTouchStart={handleLongPressStart}
+          onTouchEnd={handleLongPressEnd}
+        >
+          <Typography className={classes.buttonText}>
+            {/* {status.start ? '长按终止' : (status.end ? '已结束' : '长按开始')} */}
+            长按开始
+          </Typography>
+        </Fab>
+        <CircularProgress size={98} className={classes.fabProgress} variant="static" value={loadingPercent} />
+      </div>
+    );
+  }
+  return null;
 }

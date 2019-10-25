@@ -65,7 +65,7 @@ export default function View(props) {
     socket.on('connect', () => {
       setConnected(true);
     });
-    socket.on('connect_error', () => {
+    socket.on('disconnect', () => {
       setConnected(false);
     });
     socket.on('update', (data1) => {
@@ -87,7 +87,7 @@ export default function View(props) {
         <Paper
           className={classes.paper}
         >
-          {connected ? '上次刷新时间: ' : '正在与推送服务器建立连接...'}
+          {connected ? '已连接推送服务器，上次刷新时间: ' : '正在与推送服务器建立连接...'}
           {connected ? transformTime(lastUpdateTime) : ''}
         </Paper>
       </Grid>
