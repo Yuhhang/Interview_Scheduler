@@ -1,11 +1,16 @@
 import Collapse from '@material-ui/core/Collapse';
 import Grid from '@material-ui/core/Grid';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import FaceIcon from '@material-ui/icons/Face';
@@ -21,6 +26,16 @@ const useStyles = makeStyles((theme) => ({
   },
   nested: {
     paddingLeft: theme.spacing(4),
+  },
+  nameInputHelperText: {
+    paddingTop: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    marginBottom: 25,
   },
 }));
 
@@ -49,6 +64,48 @@ export default function IntervieweeList() {
       <span>
         {`+${index * minPerPerson} min`}
       </span>
+    );
+  }
+
+  function ViewerInfo() {
+    const [inputName, setInputName] = React.useState('');
+    const index = appState.waitingList.findIndex((item) => item.name === inputName);
+
+    return (
+      <Paper
+        className={classes.paper}
+      >
+        <TextField
+          id="input-personal_info"
+          label="输入您的个人信息"
+          value={inputName}
+          onChange={(event) => setInputName(event.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AccountCircle />
+              </InputAdornment>
+            ),
+          }}
+        />
+        {index !== -1
+          ? (
+            <>
+              <Typography className={classes.nameInputHelperText} variant="body2" color="textPrimary" align="left">
+                还有
+                {index}
+                个人轮到您
+              </Typography>
+              <Typography className={classes.nameInputHelperText} variant="body2" color="textSecondary" align="left">
+                {ApproximatelyTimeLater({ index })}
+              </Typography>
+            </>
+          ) : (
+            <Typography className={classes.nameInputHelperText} variant="body2" color="textPrimary" align="left">
+              无匹配
+            </Typography>
+          )}
+      </Paper>
     );
   }
 
@@ -167,6 +224,7 @@ export default function IntervieweeList() {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} sm={6}>
+        <ViewerInfo />
         <WaitingList />
       </Grid>
       <Grid item xs={12} sm={6}>

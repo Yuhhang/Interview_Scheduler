@@ -53,6 +53,9 @@ export default function EventInfo() {
           {copySuccess === undefined ? '复制' : copySuccess ? '复制成功' : '写入剪切板失败,请手动复制'}
         </Button>
       </Typography>
+      <Typography variant="body2" color="textPrimary" align="left">
+        提醒：信息只会同步推送至查看页面，多人同时在管理页面进行操作可能导致数据不一致！
+      </Typography>
     </div>
   );
 }

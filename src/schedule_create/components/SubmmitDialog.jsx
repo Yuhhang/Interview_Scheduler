@@ -55,6 +55,9 @@ export default function SubmmitDialog({ data, submmit }) {
                 ))
                 : <ListItemText primary="无" />}
             </List>
+            <Typography variant="body2" color="textPrimary" align="left">
+              提醒：新生成的活动将在服务器保留七天后移除
+            </Typography>
           </DialogContentText>
         </DialogContent>
         <DialogActions>

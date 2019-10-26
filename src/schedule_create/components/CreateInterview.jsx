@@ -51,8 +51,8 @@ export default function CreateInterview() {
       const { data } = res;
       localStorage.setItem(data.info.id, JSON.stringify(data));
       window.location.replace(data.info.manage);
-    }).catch((err) => {
-      console.log(err);
+    }).catch(() => {
+      // console.log(err);
     });
   };
 
@@ -95,6 +95,7 @@ export default function CreateInterview() {
           onChange={handleChange('timePerPerson')}
           margin="normal"
           variant="filled"
+          helperText="面试开始后会根据实际面试时间实时计算，此时间为显示的最小间隔"
           InputProps={{
             endAdornment: <InputAdornment position="end">min</InputAdornment>,
           }}
