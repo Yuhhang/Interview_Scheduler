@@ -27,13 +27,8 @@ const useStyles = makeStyles((theme) => ({
   nested: {
     paddingLeft: theme.spacing(4),
   },
-  nameInputHelperText: {
-    paddingTop: theme.spacing(1),
-    paddingLeft: theme.spacing(2),
-  },
   paper: {
     padding: theme.spacing(2),
-    textAlign: 'center',
     color: theme.palette.text.secondary,
     marginBottom: 25,
   },
@@ -87,21 +82,24 @@ export default function IntervieweeList() {
               </InputAdornment>
             ),
           }}
+          style={{
+            paddingBottom: 5,
+          }}
         />
         {index !== -1
           ? (
             <>
-              <Typography className={classes.nameInputHelperText} variant="body2" color="textPrimary" align="left">
+              <Typography variant="body2" color="textPrimary">
                 还有
                 {index}
                 个人轮到您
               </Typography>
-              <Typography className={classes.nameInputHelperText} variant="body2" color="textSecondary" align="left">
+              <Typography variant="body2" color="textSecondary">
                 {ApproximatelyTimeLater({ index })}
               </Typography>
             </>
           ) : (
-            <Typography className={classes.nameInputHelperText} variant="body2" color="textPrimary" align="left">
+            <Typography variant="body2" color="textSecondary">
               无匹配
             </Typography>
           )}
