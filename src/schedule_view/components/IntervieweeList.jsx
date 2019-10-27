@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import Collapse from '@material-ui/core/Collapse';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -8,11 +9,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import CancelIcon from '@material-ui/icons/Cancel';
 import FaceIcon from '@material-ui/icons/Face';
 import React, { useContext } from 'react';
 import context from '../../schedule_manage/context/context';
@@ -63,8 +66,11 @@ export default function IntervieweeList() {
   }
 
   function ViewerInfo() {
-    const [inputName, setInputName] = React.useState('');
+    const [inputName, setInputName] = React.useState(sessionStorage.getItem('viewerInfo') || '');
     const index = appState.waitingList.findIndex((item) => item.name === inputName);
+    if (index !== -1) {
+      sessionStorage.setItem('viewerInfo', inputName);
+    }
 
     return (
       <Paper
@@ -79,6 +85,17 @@ export default function IntervieweeList() {
             startAdornment: (
               <InputAdornment position="start">
                 <AccountCircle />
+              </InputAdornment>
+            ),
+            endAdornment: inputName && (
+              <InputAdornment position="end">
+                <IconButton onClick={() => {
+                  sessionStorage.removeItem('viewerInfo');
+                  setInputName('');
+                }}
+                >
+                  <CancelIcon />
+                </IconButton>
               </InputAdornment>
             ),
           }}
