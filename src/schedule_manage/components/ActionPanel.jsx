@@ -36,12 +36,13 @@ export default function ActionPanel() {
             已到场
           </Button>
           <Button
+            disabled={!status.start || !(appState.waitingList.length > 0)}
             style={{ marginLeft: 20 }}
             color="secondary"
             variant="contained"
             onClick={() => data.setStatusunPresent()}
           >
-            未到场
+            未到场(直接下一位)
           </Button>
         </span>
       );
