@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { Typography, Button } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
 import context from '../context/context';

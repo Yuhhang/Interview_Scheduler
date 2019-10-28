@@ -3,5 +3,8 @@
     "rules": {
         "react/prop-types": "off",
         "no-nested-ternary": "off"
+    },
+    "env": {
+        "browser": true,
     }
 }

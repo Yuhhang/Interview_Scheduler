@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import {
   InputAdornment, Paper, TextField, Typography,
 } from '@material-ui/core';

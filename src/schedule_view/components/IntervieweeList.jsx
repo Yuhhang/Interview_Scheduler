@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import Collapse from '@material-ui/core/Collapse';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
