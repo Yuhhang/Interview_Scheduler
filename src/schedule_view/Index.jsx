@@ -65,6 +65,11 @@ export default function View(props) {
     socket.on('connect', () => {
       setConnected(true);
     });
+    socket.on('reconnect', () => {
+      instance.post('/getEvent', { id }).then((res) => {
+        data.updateState(res.data);
+      });
+    });
     socket.on('disconnect', () => {
       setConnected(false);
     });
